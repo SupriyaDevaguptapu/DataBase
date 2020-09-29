@@ -1,0 +1,108 @@
+<html>
+<head>
+<title>Export HTML Table Data to Excel using JavaScript</title>
+
+<script type="text/javascript">
+function exportToExcel(tableID, filename = ''){
+    var downloadurl;
+    var dataFileType = 'application/vnd.ms-excel';
+    var tableSelect = document.getElementById(tableID);
+    var tableHTMLData = tableSelect.outerHTML.replace(/ /g, '%20');
+    
+
+    filename = filename?filename+'.xls':'export_excel_data.xls';
+    
+    
+    downloadurl = document.createElement("a");
+    
+    document.body.appendChild(downloadurl);
+    
+    if(navigator.msSaveOrOpenBlob){
+        var blob = new Blob(['\ufeff', tableHTMLData], {
+            type: dataFileType
+        });
+        navigator.msSaveOrOpenBlob( blob, filename);
+    }
+    else{
+        
+        downloadurl.href = 'data:' + dataFileType + ', ' + tableHTMLData;
+    
+      
+        downloadurl.download = filename;
+        
+       
+        downloadurl.click();
+    }
+}
+ 
+</script>
+</head>
+<body>
+<div class="container">
+<table id="tblexportData" class="table">
+<thead>
+    <tr>
+        <th>Name</th>
+        <th>Date Of Birth</th>
+        <th>HighestQualification</th>
+        <th>Location</th>
+        <th>TechnicalSkills</th>
+        <th>InterpersonalSkills</th>
+        <th>TelephoneNumber</th>
+        <th>EmailId</th>
+        <th>Hobbies</th>
+    </tr>
+ </thead>
+  <tbody>
+    <tr>
+        <td>Supriya</td>
+        <td>30-11-1997</td>
+        <td>BTech</td>
+        <td>Visakhapatnam</td>
+        <td>Java,C,Python</td>
+        <td>Creative</td>
+        <td>8096654233</td>
+        <td>supriyadevaguptapu809@gmail.com</td>
+        <td>singing,dancing</td>
+
+    </tr>
+    <tr>
+        <td>Supriya</td>
+        <td>30-11-1997</td>
+        <td>BTech</td>
+        <td>Visakhapatnam</td>
+        <td>Java,C,Python</td>
+        <td>Creative</td>
+        <td>8096654233</td>
+        <td>supriyadevaguptapu809@gmail.com</td>
+        <td>singing,dancing</td>
+    </tr>
+    <tr>
+        <td>Deepthi</td>
+        <td>30-12-1997</td>
+        <td>BTech</td>
+        <td>Visakhapatnam</td>
+        <td>Java,C,Python</td>
+        <td>Creative</td>
+        <td>8756483957</td>
+        <td>deepthi9@gmail.com</td>
+        <td>singing,dancing</td>
+    </tr>
+<tr>
+    <td>Amjad</td>
+    <td>12-10-1997</td>
+    <td>BTech</td>
+    <td>jarkhand</td>
+    <td>Java,C,Python</td>
+    <td>Creative</td>
+    <td>8123458907</td>
+    <td>amjad@gmail.com</td>
+    <td>painting</td>
+    </tr>
+ </tbody>
+</table>
+ 
+<button onclick="exportToExcel('tblexportData', 'user-data')" class="btn btn-success">Export Table Data To Excel File</button>
+</div>
+</body>
+</html>
